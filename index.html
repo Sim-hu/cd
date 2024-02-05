@@ -25,14 +25,14 @@
             cdp += calculatecdupEffect(cupslv);
 
             // 総agiを計算して、軌跡(kisekislv)を加算
-            var totalagi = baseagi * (1 + agip / 100) + addagi + calculateSwiftTrajectoryEffect(kisekislv);
+            var totalagi = baseagi *(1 + agip / 100) + addagi + calculateSwiftTrajectoryEffect(kisekislv);
 
             // 総strを計算
-            var totalstr = basestr * (1 + strp / 100) + addstr;
+            var totalstr = basestr *(1 + strp / 100) + addstr;
 
             // cd計算をする
             // その時に(総str/5と)(総agi+総str/10)を比較して、大きい方にcd%とcd固定値を加算
-            var maxResult = Math.max(totalstr / 5, (totalagi + totalstr) / 10)
+            var maxResult = Math.max(totalstr / 5, (totalagi + totalstr) / 10);
             var result = Math.floor((150 + maxResult) * (1 + cdp / 100)) + addcd;
 
             // cdが300超えた場合の300以降半減の処理
