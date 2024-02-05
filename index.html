@@ -26,7 +26,7 @@
             cdp += calculatecdupEffect(cdp);
 
             //総agiを計算して、軌跡(kisekislv)を加算
-            var totalagi = baseagi * (1+agip/100) +addagi + calculatekisekislvEffect;
+            var totalagi = baseagi * (1+agip/100) +addagi + calculateSwiftTrajectoryEffect;
 
             //総strを計算
             var totalstr =basestr *(1+strp/100) +addstr;
@@ -117,7 +117,8 @@
             <option value="9">9</option>
             <option value="10">10</option>
         </select><br>
-        <button type="button" onclick="calculate">計算</button>
+        
+        <button type="button" onclick="calculate()">計算</button>
     </form>
 
     <div id="result"></div>
