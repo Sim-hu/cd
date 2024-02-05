@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>cd計算機</title>
+    <script>
+        function calculate () {
+            //入力値の習得
+            //strpはstr%の意味
+            var basestr =parseFloat(document.getElementById('basestr').value) || 0;
+            var strp =parseFloat(document.getElementById('strp').value) || 0;
+            var addstr =parseFloat(document.getElementById('addstr').value) || 0;
+
+            var baseagi =parseFloat(document.getElementById('baseagi').value) || 0;
+            var agip =parseFloat(document.getElementById('agip').value) || 0;
+            var addagi =parseFloat(document.getElementById('addagi').value) || 0;
+
+            var cdp =parseFloat(document.getElementById('cdp').value) || 0;
+            var addcd =parseFloat(document.getElementById('addcd').value) || 0;
+            var cupslv =parseFloat(document.getElementById('cupslv').value) || 0;
+
+            var kisekislv =parseFloat(document.getElementById('kiseki').value) || 0;
+
+            //cupp(クリアップ％)のslvをcdpに加算
+            cdp += calculatecdupEffect(cdp);
+
+            //総agiを計算して、軌跡(kisekislv)を加算
+            var totalagi = baseagi * (1+agip/100) +addagi + calculatekisekislvEffect;
+
+            //総strを計算
+            var totalstr =basestr *(1+strp/100) +addstr;
+
+            //cd計算をする
+            //その時に(総str/5と)(総agi+総str/10)を比較して、大きい方にcd%とcd固定値を加算
+            var maxResult = Math.max(totalstr/5, (totalagi+totalstr)/10)
+            var result =Math.floor((150+maxResult)*(1+cdp/100)) + addcd;
+
+            //cdが300超えた場合の300以降半減の処理
+            if (result >300){
+                result =Math.floor((result-300)/2+300);
+            }
+             document.getElementById('result').innerText = '結果: ' + result;
+        }
+
+
+        function calculatecdupEffect(level) {
+            // クリティカルUPslvに基づいてcd%の増加量を計算
+            return Math.min((level - 1), 5);
+        }
+
+        function calculateSwiftTrajectoryEffect(level) {
+            // 神速の軌跡slvに基づいて総AGIの増加量を計算
+            if (level <= 5) {
+                return level;
+            } else {
+                return 5 + (level - 5) * 2;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>cd計算機</h1>
+    <form>
+        <label for="basestr">基礎STR:</label>
+        <input type="number" id="basestr" placeholder="0" value="0" required><br>
+
+        <label for="strp">STR%:</label>
+        <input type="number" id="strp" placeholder="0" value="0" required><br>
+
+        <label for="addstr">STR+:</label>
+        <input type="number" id="addstr" placeholder="0" value="0" required><br>
+
+        <label for="baseagi">基礎AGI:</label>
+        <input type="number" id="baseagi" placeholder="0" value="0" required><br>
+
+        <label for="agip">AGI%:</label>
+        <input type="number" id="agip" placeholder="0" value="0" required><br>
+
+        <label for="addagi">AGI+:</label>
+        <input type="number" id="addagi" placeholder="0" value="0" required><br>
+
+        <label for="addcd">cd固定値:</label>
+        <input type="number" id="addcd" placeholder="0" value="0" required><br>
+
+        <label for="cdp">cd%:</label>
+        <input type="number" id="cdp" placeholder="0" value="0" required><br>
+
+        <!--クリティカルupの選択肢を追加-->
+        <label for="cupslv">クリティカルupslv</label>
+        <select id="cdpslv">
+            <option value="0">o</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select><br>
+
+        <!--神速の軌跡のslvの選択肢の追加-->
+        <label for="kisekislv">神速の軌跡slv:</label>
+        <select id="kisekislv">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select><br>
+        <button type="button" onclick="calculate()">計算</button>
+    </form>
+    <div id="result"></div>
+</body>
+</html>
+
