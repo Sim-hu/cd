@@ -45,15 +45,15 @@
 
         function calculatecdupEffect(level) {
             // クリティカルUPslvに基づいてcd%の増加量を計算
-            return Math.min((level - 1), 5);
+            return Math.min((level - 1), 5)
         }
 
         function calculateSwiftTrajectoryEffect(level) {
             // 神速の軌跡slvに基づいて総AGIの増加量を計算
             if (level <= 5) {
-                return level;
+                return level
             } else {
-                return 5 + (level - 5) * 2;
+                return 5 + (level - 5) * 2
             }
         }
     </script>
